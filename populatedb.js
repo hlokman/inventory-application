@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 console.log(
-  'This script populates some test books, authors, genres and bookinstances to your database. Specified database as argument - e.g.: node populatedb "mongodb+srv://cooluser:coolpassword@cluster0.lz91hw2.mongodb.net/local_library?retryWrites=true&w=majority"'
+  'test'
 );
 
 // Get arguments passed on command line
@@ -27,8 +27,9 @@ async function main() {
   console.log("Debug: About to connect");
   await mongoose.connect(mongoDB);
   console.log("Debug: Should be connected?");
-  await createItems();
   await createCategories();
+  await createItems();
+
   /*await createBooks();
   await createBookInstances();*/
   console.log("Debug: Closing mongoose");
