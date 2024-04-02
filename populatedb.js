@@ -7,15 +7,14 @@ console.log(
 // Get arguments passed on command line
 const userArgs = process.argv.slice(2);
 
-const Book = require("./models/book");
-const Author = require("./models/author");
-const Genre = require("./models/genre");
-const BookInstance = require("./models/bookinstance");
+const Item = require("./models/item");
+const Category = require("./models/category");
+/*const Genre = require("./models/genre");
+const BookInstance = require("./models/bookinstance");*/
 
-const genres = [];
-const authors = [];
-const books = [];
-const bookinstances = [];
+const items = [];
+const categories = [];
+
 
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
@@ -28,10 +27,10 @@ async function main() {
   console.log("Debug: About to connect");
   await mongoose.connect(mongoDB);
   console.log("Debug: Should be connected?");
-  await createGenres();
-  await createAuthors();
-  await createBooks();
-  await createBookInstances();
+  await createItems();
+  await createCategories();
+  /*await createBooks();
+  await createBookInstances();*/
   console.log("Debug: Closing mongoose");
   mongoose.connection.close();
 }
@@ -39,26 +38,22 @@ async function main() {
 // We pass the index to the ...Create functions so that, for example,
 // genre[0] will always be the Fantasy genre, regardless of the order
 // in which the elements of promise.all's argument complete.
-async function genreCreate(index, name) {
-  const genre = new Genre({ name: name });
-  await genre.save();
-  genres[index] = genre;
+async function categoryCreate(index, name, description) {
+  const category = new Category({ name: name, description: description });
+  await category.save();
+  categories[index] = category;
   console.log(`Added genre: ${name}`);
 }
 
-async function authorCreate(index, first_name, family_name, d_birth, d_death) {
-  const authordetail = { first_name: first_name, family_name: family_name };
-  if (d_birth != false) authordetail.date_of_birth = d_birth;
-  if (d_death != false) authordetail.date_of_death = d_death;
+async function itemCreate(index, name, description, price, stock, category) {
+  const item = new Item({ name: name, description: description, price: price, stock: stock, category: category });
 
-  const author = new Author(authordetail);
-
-  await author.save();
-  authors[index] = author;
-  console.log(`Added author: ${first_name} ${family_name}`);
+  await item.save();
+  items[index] = item;
+  console.log(`Added item: ${name}`);
 }
 
-async function bookCreate(index, title, summary, isbn, author, genre) {
+/*async function bookCreate(index, title, summary, isbn, author, genre) {
   const bookdetail = {
     title: title,
     summary: summary,
@@ -71,9 +66,9 @@ async function bookCreate(index, title, summary, isbn, author, genre) {
   await book.save();
   books[index] = book;
   console.log(`Added book: ${title}`);
-}
+}*/
 
-async function bookInstanceCreate(index, book, imprint, due_back, status) {
+/*async function bookInstanceCreate(index, book, imprint, due_back, status) {
   const bookinstancedetail = {
     book: book,
     imprint: imprint,
@@ -85,18 +80,107 @@ async function bookInstanceCreate(index, book, imprint, due_back, status) {
   await bookinstance.save();
   bookinstances[index] = bookinstance;
   console.log(`Added bookinstance: ${imprint}`);
-}
+}*/
 
-async function createGenres() {
-  console.log("Adding genres");
+
+//To use the functions that we created
+async function createCategories() {
+  console.log("Adding categories");
   await Promise.all([
-    genreCreate(0, "Fantasy"),
-    genreCreate(1, "Science Fiction"),
-    genreCreate(2, "French Poetry"),
+    categoryCreate(0, "Decor", "Diverse range of home decor products."),
+    categoryCreate(1, "Bedroom", "Bedroom essentials."),
+    categoryCreate(2, "Living Room", "Living room essentials and decor items."),
+    categoryCreate(3, "Kitchen", "Kitchen essentials and accessories."),
   ]);
 }
 
-async function createAuthors() {
+async function createItems() {
+  console.log("Adding items");
+  await Promise.all([
+    itemCreate(
+        0,
+        "Floor lamp",
+        "The lamp’s shade is made from recycled PET bottles and its solid wood base is made from more sustainable sources. It spreads mood lighting ― you can also adjust the height and hide the cord in the lamp base.",
+        59.99,
+        45,
+        categories[0]
+    ),
+    itemCreate(
+        1,
+        "Wall art",
+        "Think big when you think about pictures. With a large frame and picture like BJÖRKSTA, you add a touch to the whole room and create the feeling you want. Art that matches both your decor and personality!",
+        122.99,
+        50,
+        categories[0]
+    ),
+    itemCreate(
+        2,
+        "Artificial potted plant",
+        "With this lifelike potted plant, primarily made from recycled plastic, you can create a little jungle where you can enjoy lush greenery all year round. Simple to bring home since it comes in parts.",
+        54.99,
+        45, 
+        categories[0]
+    ),
+    itemCreate(
+        3,
+        "Bed frame with storage",
+        "A bed frame with hidden storage in several places – perfect if you live in a small space. It has several smart solutions that help you save space.",
+        549.99,
+        40,
+        categories[1]
+    ),
+    itemCreate(
+        4,
+        "Foam mattress",
+        'A 7⅞" medium-firm mattress with 3 layers of comfort and support. A top layer of cooling material on plush foam combined with memory foam and comfort zones for even distribution of body weight.',
+        349.00,
+        60,
+        categories[1]
+    ),
+    itemCreate(
+        5,
+        "Nightstand",
+        "The door can be hung to open either right or left.",
+        89.99,
+        50,
+        categories[1]
+    ),
+    itemCreate(
+        6,
+        "Sofa",
+        "sofa can grow and change with a home and the family. Choose how many seats, the look and function to create a sofa that suits you. A clean design and long-lasting comfort are included.",
+        1149.00,
+        55,
+        categories[2]
+    ),
+    itemCreate(
+        7,
+        "Chaise",
+        "Storage space under the chaise. The lid stays open so you can safely and easily take things in and out.",
+        780.00,
+        55,
+        categories[2]
+    ),
+    itemCreate(
+        8,
+        "Induction cooktop",
+        "Free your kitchen from a hanging hood and place your cooktop wherever you like. This sleek induction cooktop comes with an integrated extractor that is automated - the higher the heat the greater the extraction.",
+        1999.00,
+        40,
+        categories[3]
+    ),
+    itemCreate(
+        9,
+        "Pot",
+        "This stainless steel pot has a spout to make pouring and draining liquids easier and a heat resistant glass lid with a built in strainer. Perfect for when you are boiling pasta or making soup.",
+        34.99,
+        60,
+        categories[3]
+    ),
+  ]);
+}
+
+/*async function createAuthors() {
   console.log("Adding authors");
   await Promise.all([
     authorCreate(0, "Patrick", "Rothfuss", "1973-06-06", false),
@@ -105,71 +189,9 @@ async function createAuthors() {
     authorCreate(3, "Bob", "Billings", false, false),
     authorCreate(4, "Jim", "Jones", "1971-12-16", false),
   ]);
-}
+}*/
 
-async function createBooks() {
-  console.log("Adding Books");
-  await Promise.all([
-    bookCreate(
-      0,
-      "The Name of the Wind (The Kingkiller Chronicle, #1)",
-      "I have stolen princesses back from sleeping barrow kings. I burned down the town of Trebon. I have spent the night with Felurian and left with both my sanity and my life. I was expelled from the University at a younger age than most people are allowed in. I tread paths by moonlight that others fear to speak of during day. I have talked to Gods, loved women, and written songs that make the minstrels weep.",
-      "9781473211896",
-      authors[0],
-      [genres[0]]
-    ),
-    bookCreate(
-      1,
-      "The Wise Man's Fear (The Kingkiller Chronicle, #2)",
-      "Picking up the tale of Kvothe Kingkiller once again, we follow him into exile, into political intrigue, courtship, adventure, love and magic... and further along the path that has turned Kvothe, the mightiest magician of his age, a legend in his own time, into Kote, the unassuming pub landlord.",
-      "9788401352836",
-      authors[0],
-      [genres[0]]
-    ),
-    bookCreate(
-      2,
-      "The Slow Regard of Silent Things (Kingkiller Chronicle)",
-      "Deep below the University, there is a dark place. Few people know of it: a broken web of ancient passageways and abandoned rooms. A young woman lives there, tucked among the sprawling tunnels of the Underthing, snug in the heart of this forgotten place.",
-      "9780756411336",
-      authors[0],
-      [genres[0]]
-    ),
-    bookCreate(
-      3,
-      "Apes and Angels",
-      "Humankind headed out to the stars not for conquest, nor exploration, nor even for curiosity. Humans went to the stars in a desperate crusade to save intelligent life wherever they found it. A wave of death is spreading through the Milky Way galaxy, an expanding sphere of lethal gamma ...",
-      "9780765379528",
-      authors[1],
-      [genres[1]]
-    ),
-    bookCreate(
-      4,
-      "Death Wave",
-      "In Ben Bova's previous novel New Earth, Jordan Kell led the first human mission beyond the solar system. They discovered the ruins of an ancient alien civilization. But one alien AI survived, and it revealed to Jordan Kell that an explosion in the black hole at the heart of the Milky Way galaxy has created a wave of deadly radiation, expanding out from the core toward Earth. Unless the human race acts to save itself, all life on Earth will be wiped out...",
-      "9780765379504",
-      authors[1],
-      [genres[1]]
-    ),
-    bookCreate(
-      5,
-      "Test Book 1",
-      "Summary of test book 1",
-      "ISBN111111",
-      authors[4],
-      [genres[0], genres[1]]
-    ),
-    bookCreate(
-      6,
-      "Test Book 2",
-      "Summary of test book 2",
-      "ISBN222222",
-      authors[4],
-      false
-    ),
-  ]);
-}
-
-async function createBookInstances() {
+/*async function createBookInstances() {
   console.log("Adding authors");
   await Promise.all([
     bookInstanceCreate(
@@ -226,4 +248,4 @@ async function createBookInstances() {
     bookInstanceCreate(9, books[0], "Imprint XXX2", false, false),
     bookInstanceCreate(10, books[1], "Imprint XXX3", false, false),
   ]);
-}
+}*/
