@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const catalogRouter = require("./routes/catalog");
 
 const app = express();
 
@@ -15,13 +16,9 @@ const mongoDB =
   "mongodb+srv://abdallahlokmanhenni:abdallah93@cluster0.dkx7ulr.mongodb.net/inventory_application?retryWrites=true&w=majority&appName=Cluster0";
 mongoose.set("strictQuery", false);
 
-//main().catch((err) => console.log(err))
+main().catch((err) => console.log(err));
 async function main() {
-  try {
-    await mongoose.connect(mongoDB);
-  } catch (err) {
-    console.log(err);
-  }
+  await mongoose.connect(mongoDB);
 }
 
 // view engine setup
@@ -36,6 +33,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/catalog", catalogRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

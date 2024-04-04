@@ -1,11 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <%- include("./partials/header.ejs") %>
+    <main>
+      <div class="containerMain">
+        <%- include("./partials/navbar.ejs") %>
+        <section class="home">
+          <h2><%= title %></h2>
+          <p>
+            Welcome to <strong><em>Inventory Management</em></strong
+            >, a very simple Inventory management app for an imaginary store.
+          </p>
+          <br />
+          <h2>Dynamic content</h2>
+          <p>The store has the following record counts:</p>
+          <ul class="counts">
+            <li><strong>Categories:</strong> <%= category_count %></li>
+            <li><strong>Items:</strong> <%= item_count %></li>
+          </ul>
+        </section>
+      </div>
+    </main>
   </body>
 </html>

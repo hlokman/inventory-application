@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <%- include("./partials/header.ejs") %>
+    <main>
+      <div class="containerMain">
+        <%- include("./partials/navbar.ejs") %>
+        <section class="home">
+          <h2><%= title %></h2>
+          <ul class="counts">
+            <% if (item_list.length > 0) { %> <%
+            item_list.forEach(function(item) { %>
+            <li><a href="<%= item.url %>"><%= item.name %></a></li>
+            <% }); %> <% } else { %>
+            <p>
+              <em><strong>There are no items</strong></em>
+            </p>
+            <%}%>
+          </ul>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
