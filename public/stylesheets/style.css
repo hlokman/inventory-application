@@ -79,3 +79,12 @@ nav li {
   flex-direction: column;
   gap: 5px;
 }
+
+.itemsText {
+  text-decoration: underline;
+  font-size: 17px;
+}
+
+.item {
+  margin-bottom: -13px;
+}

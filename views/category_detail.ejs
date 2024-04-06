@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Category Detail</title>
+  </head>
+  <body>
+    <%- include("./partials/header.ejs") %>
+    <main>
+      <div class="containerMain">
+        <%- include("./partials/navbar.ejs") %>
+        <section class="home">
+          <h2>Category: <%= category.name %> (<%= category.description %>)</h2>
+          <p class="itemsText"><strong>Items: </strong></p>
+          <% if (category_items.length > 0) { %> <%
+          category_items.forEach((item) => {%>
+          <p class="item">
+            <strong
+              ><em><a href="<%= item.url %>"><%= item.name %></a></em></strong
+            >
+          </p>
+          <p><%= item.description %></p>
+          <br />
+          <%}) } else { %>
+          <p>
+            <strong><em>There are no items in this category</em></strong>
+          </p>
+          <% }%>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

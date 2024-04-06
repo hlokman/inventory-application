@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title><%= item_detail.name %></title>
+  </head>
+  <body>
+    <%- include("./partials/header.ejs") %>
+    <main>
+      <div class="containerMain">
+        <%- include("./partials/navbar.ejs") %>
+        <section class="home">
+          <h2>Item: <%= item_detail.name %></h2>
+          <p><strong>Description: </strong> <%=item_detail.description %></p>
+          <p>
+            <strong>Category: </strong
+            ><a href="<%= item_detail.category.url %>"
+              ><%= item_detail.category.name %></a
+            >
+          </p>
+          <br />
+          <hr />
+          <p><strong>Price: </strong><em><%= item_detail.price %></em>$</p>
+          <p><strong>In Stock: </strong><%= item_detail.stock %></p>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

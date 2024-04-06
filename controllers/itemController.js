@@ -45,3 +45,17 @@ exports.item_list = async (req, res, next) => {
     console.log(err);
   }
 };
+
+exports.item_detail = async (req, res, next) => {
+  try {
+    const item_detail = await Item.findById(req.params.id)
+      .populate("category")
+      .exec();
+
+    res.render("item_detail", {
+      item_detail: item_detail,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
