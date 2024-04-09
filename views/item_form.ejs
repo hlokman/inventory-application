@@ -13,7 +13,11 @@
         <%- include("./partials/navbar.ejs") %>
         <section class="home">
           <h2><%= title %></h2>
-          <form action="/catalog/item/create" method="post" class="itemForm">
+          <form
+            action="<%= typeof update === 'undefined' ? '/catalog/item/create' : item.url + '/update' %> "
+            method="post"
+            class="itemForm"
+          >
             <div class="formSection">
               <label for="name">Item:</label>
               <input

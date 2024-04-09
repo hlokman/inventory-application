@@ -13,7 +13,10 @@
         <%- include("./partials/navbar.ejs") %>
         <section class="home">
           <h2><%= title %></h2>
-          <form action="/catalog/category/create" method="post">
+          <form
+            action="<%= typeof update === 'undefined' ? '/catalog/category/create' : category.url + '/update' %>"
+            method="post"
+          >
             <div class="formSection">
               <label for="category">Category:</label>
               <input
@@ -27,14 +30,16 @@
             </div>
             <div class="formSection">
               <label for="description">Description:</label>
-              <input
+              <textarea
                 type="text"
                 name="description"
                 id="description"
                 placeholder="A little description..."
                 value="<%= typeof category=== 'undefined' ? '' : category.description %>"
                 required
-              />
+              >
+<%= typeof category === 'undefined' ? '' : category.description %></textarea
+              >
             </div>
 
             <button type="submit" class="btnSubmit">Submit</button>

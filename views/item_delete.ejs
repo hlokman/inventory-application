@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
-    <title><%= item_detail.name %></title>
+    <title><%= title %></title>
   </head>
   <body>
     <%- include("./partials/header.ejs") %>
@@ -12,7 +12,7 @@
       <div class="containerMain">
         <%- include("./partials/navbar.ejs") %>
         <section class="home">
-          <h2>Item: <%= item_detail.name %></h2>
+          <h2><%= title %></h2>
           <p><strong>Description: </strong> <%=item_detail.description %></p>
           <p>
             <strong>Category: </strong
@@ -25,8 +25,17 @@
           <p><strong>Price: </strong><em><%= item_detail.price %></em>$</p>
           <p><strong>In Stock: </strong><%= item_detail.stock %></p>
           <br />
-          <p><a href="<%= item_detail.url + '/delete' %>">Delete Item</a></p>
-          <p><a href="<%= item_detail.url + '/update' %>">Update Item</a></p>
+
+          <p>Do you really want to delete this item?</p>
+          <form action="<%= item_detail.url + '/delete'%>" method="post">
+            <input
+              type="hidden"
+              name="itemid"
+              id="<%= item_detail._id %>"
+              value="<%= item_detail._id %>"
+            />
+            <button type="submit" class="btnSubmit">Delete</button>
+          </form>
         </section>
       </div>
     </main>

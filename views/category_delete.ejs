@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <%- include("./partials/header.ejs") %>
+    <main>
+      <div class="containerMain">
+        <%- include("./partials/navbar.ejs") %>
+        <section class="home">
+          <% if (category_items.length > 0) { %>
+          <h2><%= title %></h2>
+          <p>
+            <strong
+              >Delete the following items before attempting to delete this
+              category.</strong
+            >
+          </p>
+
+          <h2>Items</h2>
+          <% category_items.forEach((item) => {%>
+          <p class="item">
+            <strong
+              ><em><a href="<%= item.url %>"><%= item.name %></a></em></strong
+            >
+          </p>
+          <p><%= item.description %></p>
+          <% })%> <% } else { %>
+          <h2><%= title %></h2>
+          <p>Do you really want to delete this category?</p>
+          <form action="<%= category.url + '/delete'%>" method="post">
+            <input
+              type="hidden"
+              name="categoryid"
+              id="<%= category._id %>"
+              value="<%= category._id %>"
+            />
+            <button type="submit" class="btnSubmit">Delete</button>
+          </form>
+          <%}%>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
