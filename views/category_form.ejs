@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <%- include("./partials/header.ejs") %>
+    <main>
+      <div class="containerMain">
+        <%- include("./partials/navbar.ejs") %>
+        <section class="home">
+          <h2><%= title %></h2>
+          <form action="/catalog/category/create" method="post">
+            <div class="formSection">
+              <label for="category">Category:</label>
+              <input
+                type="text"
+                name="category"
+                id="category"
+                placeholder="Bathroom, Garden..."
+                value="<%= typeof category=== 'undefined' ? '' : category.name   %>"
+                required
+              />
+            </div>
+            <div class="formSection">
+              <label for="description">Description:</label>
+              <input
+                type="text"
+                name="description"
+                id="description"
+                placeholder="A little description..."
+                value="<%= typeof category=== 'undefined' ? '' : category.description %>"
+                required
+              />
+            </div>
+
+            <button type="submit" class="btnSubmit">Submit</button>
+          </form>
+          <% if (typeof errors !== 'undefined') {%>
+          <ul>
+            <% errors.forEach((error) => { %>
+            <li><%=error.msg%></li>
+            <%}) %>
+          </ul>
+          <% }%>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

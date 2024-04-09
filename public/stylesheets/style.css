@@ -88,3 +88,115 @@ nav li {
 .item {
   margin-bottom: -13px;
 }
+
+.btnSubmit {
+  padding: 5px;
+  color: white;
+  background-color: #00b7ff;
+  border: none;
+  border-radius: 6px;
+}
+
+.btnSubmit:hover {
+  opacity: 0.8;
+}
+
+.formSection {
+  display: block;
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+}
+
+.checkboxes {
+  display: flex;
+}
+
+.categorySelection {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.priceAndStock {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.itemForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.itemSubmit {
+  width: 60px;
+  align-self: center;
+}
+
+textarea {
+  resize: none;
+  height: 100px;
+}
+
+/*
+  (req, res, next) => {
+    if (!Array.isArray(req.body.category)) {
+      typeof req.body.category === "undefined" ? [] : [req.body.category];
+    }
+    next();
+  },
+
+  body("name", "Item name must not be empty")
+    .trim()
+    .isLength({ min: 3, max: 100 })
+    .escape(),
+  body("description", "The description name must contain at least 3 characters")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+  body("price", "The price must be between 0.01 and 10000")
+    .trim()
+    .isFloat({ min: 0.01, max: 10000 })
+    .escape(),
+  body("stock", "The stock must be an integer between 0 and 99")
+    .trim()
+    .isInt({ min: 0, max: 99 })
+    .escape(),
+  body("category.*").escape(),
+
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+
+      const item = new Item({
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price,
+        stock: req.body.stock,
+        category: req.body.category,
+      });
+
+      if (!errors.isEmpty()) {
+        const allCategories = await Category.find().exec();
+
+        res.render("item_form", {
+          title: "Create Item",
+          category_list: allCategories,
+          item: item,
+          errors: errors.array(),
+        });
+        return;
+      } else {
+        await item.save();
+        res.redirect(item.url);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  },
+*/

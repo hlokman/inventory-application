@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const itemSchema = new Schema({
-  name: { type: String, required: true },
-  description: { type: String, required: true },
+  name: { type: String, minLength: 3, maxLength: 100, required: true },
+  description: { type: String, minLength: 3, required: true },
   price: {
     type: Number,
     min: [0.01, "Price should be at least 0.01$"],
@@ -13,7 +13,7 @@ const itemSchema = new Schema({
   },
   stock: {
     type: Number,
-    min: [1, "At least 1 of the item"],
+    min: [0, "Number can't be negative"],
     max: [99, "Not more than 99 pieces"],
     required: true,
   },
