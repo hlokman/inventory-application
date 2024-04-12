@@ -1,9 +1,12 @@
+require("dotenv").config();
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const compression = require("compression");
+const helmet = require("helmet");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -11,9 +14,16 @@ const catalogRouter = require("./routes/catalog");
 
 const app = express();
 
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
+    },
+  })
+);
+
 // Set up mongoose connection
-const mongoDB =
-  "mongodb+srv://abdallahlokmanhenni:abdallah93@cluster0.dkx7ulr.mongodb.net/inventory_application?retryWrites=true&w=majority&appName=Cluster0";
+const mongoDB = `mongodb+srv://${process.env.CREDENTIALS}/inventory_application?retryWrites=true&w=majority&appName=Cluster0`;
 mongoose.set("strictQuery", false);
 
 main().catch((err) => console.log(err));
@@ -29,6 +39,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(compression());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
