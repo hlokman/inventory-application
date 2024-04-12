@@ -1,3 +1,3 @@
 # Inventory Application
 
-[Live Demo](inventory-application-production-06d5.up.railway.app)
+[Live Demo](https://inventory-application-production-06d5.up.railway.app)
