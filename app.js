@@ -23,8 +23,11 @@ app.use(
 );
 
 // Set up mongoose connection
-const mongoDB = `mongodb+srv://${process.env.CREDENTIALS}/inventory_application?retryWrites=true&w=majority&appName=Cluster0`;
 mongoose.set("strictQuery", false);
+
+const dev_db_url = `mongodb+srv://${process.env.CREDENTIALS}/inventory_application?retryWrites=true&w=majority&appName=Cluster0`;
+
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
 
 main().catch((err) => console.log(err));
 async function main() {
