@@ -31,11 +31,9 @@
             <div class="formSection">
               <label for="description">Description:</label>
               <textarea
-                type="text"
                 name="description"
                 id="description"
                 placeholder="A little description..."
-                value="<%= typeof category=== 'undefined' ? '' : category.description %>"
                 required
               >
 <%= typeof category === 'undefined' ? '' : category.description %></textarea
